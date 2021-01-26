@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2020 at 04:13 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- Generation Time: Jan 26, 2021 at 08:21 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.4.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -50,7 +49,8 @@ INSERT INTO `tb_jsnkeluhan` (`id_jnskeluhan`, `jenis_keluhan`) VALUES
 CREATE TABLE `tb_keluhan` (
   `id_keluhan` int(11) NOT NULL,
   `id_pelanggan` int(11) NOT NULL,
-  `keluhan` int(11) NOT NULL,
+  `id_jnskeluhan` int(11) NOT NULL,
+  `keluhan` varchar(30) NOT NULL,
   `tanggal` date NOT NULL,
   `pesan` text NOT NULL,
   `nilai_alternatif` float NOT NULL,
@@ -61,13 +61,8 @@ CREATE TABLE `tb_keluhan` (
 -- Dumping data for table `tb_keluhan`
 --
 
-INSERT INTO `tb_keluhan` (`id_keluhan`, `id_pelanggan`, `keluhan`, `tanggal`, `pesan`, `nilai_alternatif`, `status`) VALUES
-(96, 4, 3, '2020-12-21', 'bocor', 0, 'Selesai diperbaiki'),
-(97, 4, 1, '2020-12-21', 'Air bocor Tolong di perbaiki', 0, 'Selesai diperbaiki'),
-(99, 4, 1, '2020-12-24', 'Tolong air bocor benerin', 0, 'Selesai diperbaiki'),
-(100, 4, 1, '2020-12-24', 'Air mati tolong benerin', 0, 'Selesai diperbaiki'),
-(101, 25, 2, '2020-12-24', 'ada kebocoran di pipa tolong diperbaiki', 0, 'Selesai diperbaiki'),
-(102, 24, 1, '2020-12-24', 'ada yang bocor', 0, 'Sedang diproses');
+INSERT INTO `tb_keluhan` (`id_keluhan`, `id_pelanggan`, `id_jnskeluhan`, `keluhan`, `tanggal`, `pesan`, `nilai_alternatif`, `status`) VALUES
+(106, 27, 1, 'Air Bocor', '2021-01-26', 'Tolong segara diperbaiki ', 0, 'Diterima');
 
 -- --------------------------------------------------------
 
@@ -129,24 +124,6 @@ CREATE TABLE `tb_pengecekan` (
   `id_pengawas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tb_pengecekan`
---
-
-INSERT INTO `tb_pengecekan` (`id_cek`, `id_keluhan`, `id_pengawas`) VALUES
-(53, 96, 5),
-(54, 97, 5),
-(57, 97, 5),
-(59, 96, 5),
-(60, 99, 5),
-(61, 100, 5),
-(62, 99, 5),
-(63, 101, 5),
-(64, 101, 5),
-(65, 102, 5),
-(66, 100, 5),
-(67, 97, 5);
-
 -- --------------------------------------------------------
 
 --
@@ -174,7 +151,8 @@ INSERT INTO `tb_pengguna` (`id_pengguna`, `username`, `nama`, `alamat`, `no_telp
 (23, 'gema', 'gema ramadhan', 'asdasda', '089506277284', 'f5bb0c8de146c67b44babbf4e6584cc0', 'pelanggan'),
 (24, 'dilan', 'dilan', 'jalan kesadaran rt 02 rw 07 Cibitung', '0898989889', 'b8f8312b939f00abb38eeafd4fd107f3', 'pelanggan'),
 (25, 'ringgo', 'ringgo putro', 'jl. wisma asri', '089678785656', 'b8f8312b939f00abb38eeafd4fd107f3', 'pelanggan'),
-(26, 'phs', 'phs', 'kdlsakdlsakl', '0897771212', 'a855bb9393d543a89708b0918f91d851', 'pelanggan');
+(26, 'phs', 'phs', 'kdlsakdlsakl', '0897771212', 'a855bb9393d543a89708b0918f91d851', 'pelanggan'),
+(27, 'genta', 'Genta Prima Syahnur', 'jl kesadaran', '089669123141', '41ad1bd82a8744f040c267fdcafa54e8', 'pelanggan');
 
 --
 -- Indexes for dumped tables
@@ -192,7 +170,7 @@ ALTER TABLE `tb_jsnkeluhan`
 ALTER TABLE `tb_keluhan`
   ADD PRIMARY KEY (`id_keluhan`),
   ADD KEY `tb_keluhan_ibfk_1` (`id_pelanggan`),
-  ADD KEY `keluhan` (`keluhan`);
+  ADD KEY `id_jnskeluhan` (`id_jnskeluhan`);
 
 --
 -- Indexes for table `tb_keluhanplgn`
@@ -236,7 +214,7 @@ ALTER TABLE `tb_jsnkeluhan`
 -- AUTO_INCREMENT for table `tb_keluhan`
 --
 ALTER TABLE `tb_keluhan`
-  MODIFY `id_keluhan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id_keluhan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `tb_keluhanplgn`
@@ -254,13 +232,13 @@ ALTER TABLE `tb_kuesioner`
 -- AUTO_INCREMENT for table `tb_pengecekan`
 --
 ALTER TABLE `tb_pengecekan`
-  MODIFY `id_cek` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id_cek` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `tb_pengguna`
 --
 ALTER TABLE `tb_pengguna`
-  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- Constraints for dumped tables
@@ -271,7 +249,7 @@ ALTER TABLE `tb_pengguna`
 --
 ALTER TABLE `tb_keluhan`
   ADD CONSTRAINT `tb_keluhan_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `tb_pengguna` (`id_pengguna`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_keluhan_ibfk_2` FOREIGN KEY (`keluhan`) REFERENCES `tb_keluhanplgn` (`id_keluhanplgn`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_keluhan_ibfk_2` FOREIGN KEY (`id_jnskeluhan`) REFERENCES `tb_jsnkeluhan` (`id_jnskeluhan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_keluhanplgn`

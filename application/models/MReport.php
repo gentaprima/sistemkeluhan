@@ -29,7 +29,7 @@ class MReport extends CI_Model
     public function getReportByWhere($col, $where, $limit, $start)
     {
         $query = $this->db->where($col, $where);
-        $query = $this->db->from("tb_keluhan")->join("tb_pengguna", "tb_pengguna.id_pengguna = tb_keluhan.id_pelanggan")->join("tb_keluhanplgn", "tb_keluhanplgn.id_keluhanplgn=tb_keluhan.keluhan")->join("tb_jsnkeluhan", "tb_jsnkeluhan.id_jnskeluhan = tb_keluhanplgn.jenis_keluhan")->order_by('nilai_alternatif', "DESC")->limit($limit, $start)->get();
+        $query = $this->db->from("tb_keluhan")->join("tb_pengguna", "tb_pengguna.id_pengguna = tb_keluhan.id_pelanggan")->join("tb_jsnkeluhan", "tb_jsnkeluhan.id_jnskeluhan = tb_keluhan.id_jnskeluhan")->order_by('nilai_alternatif', "DESC")->limit($limit, $start)->get();
         return $query->result_array();
     }
 

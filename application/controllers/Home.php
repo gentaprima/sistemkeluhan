@@ -31,6 +31,7 @@ class Home extends CI_Controller
     {
         $report = $this->input->post("keluhan");
         $message = $this->input->post("pesan");
+        $jnsKeluhan = $this->input->post('jeniskeluhan');
         $idPelanggan = $this->session->userdata("users")['id_pengguna'];
         $tanggal = date('Y-m-d');
 
@@ -40,7 +41,8 @@ class Home extends CI_Controller
                 "id_pelanggan" => $idPelanggan,
                 "keluhan" => $report,
                 "tanggal" => $tanggal,
-                "pesan" => $message
+                "pesan" => $message,
+                'id_jnskeluhan' => $jnsKeluhan
             );
 
             $this->mreport->sendReport($data);

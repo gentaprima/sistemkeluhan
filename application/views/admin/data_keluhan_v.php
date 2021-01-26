@@ -51,7 +51,7 @@
                                                     <td><?= $i ?>.</td>
                                                     <td><?= $row['nama'] ?></td>
                                                     <td><?= $row['jenis_keluhan'] ?></td>
-                                                    <td><?= $row['nama_keluhanplgn'] ?></td>
+                                                    <td><?= $row['keluhan'] ?></td>
                                                     <td><?= $row['tanggal'] ?></td>
                                                     <td><?= $row['pesan'] ?> </td>
                                                     <td><?= $row['nilai_alternatif']  ?></td>
